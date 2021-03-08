@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width initial-scale=1">
+	<title>Title</title>
+</head>
+<body>
+
+<style>
+	.tab-button{display:flex;padding:0;background:#ddddff;list-style:none}
+	.tab-button a{display:block;padding:20px;color:#333;font-weight:700;text-decoration:none}
+</style>
+
+<ul class="tab-button">
+	<li><a href="javascript:document.querySelector('#tab1').show()">TAB1</a></li>
+	<li><a href="javascript:document.querySelector('#tab2').show()">TAB2</a></li>
+	<li><a href="javascript:document.querySelector('#tab3').show()">TAB3</a></li>
+</ul>
+
+<!--탭 컨텐츠 템플릿:S-->
+<template id="tab-template">
+	<style>
+		.tab-wrap{display:none;padding:30px}
+		[name='type']{font-size:50px;color:#333}
+		[name='title']{font-size:20px;color:#d0a7db}
+	</style>
+	<div class="tab-wrap">
+		<slot name="type">템플릿 타입을 입력해주세요</slot>
+		<slot name="title">타이틀을 입력해주세요</slot>
+		<slot name="content">컨텐츠를 입력해주세요</slot>
+	</div>
+</template>
+<!--탭 컨텐츠 템플릿:E-->
+
+<!--커스텀 엘리먼트:S-->
+<tab-content id="tab1" bgColor="#eee">
+	<strong slot="type">TAB1</strong>
+	<h2 slot="title">타이틀1</h2>
+	<div slot="content">컨텐츠1</div>
+</tab-content>
+
+<tab-content id="tab2" bgColor="#ded">
+	<strong slot="type">TAB2</strong>
+	<h2 slot="title">타이틀2</h2>
+	<div slot="content">
+		<ul>
+			<li>리스트1</li>
+			<li>리스트2</li>
+			<li>리스트3</li>
+		</ul>
+	</div>
+</tab-content>
+
+<tab-content id="tab3" bgColor="#dea">
+	<strong slot="type">TAB3</strong>
+	<h2 slot="title">타이틀3</h2>
+	<div slot="content">
+		<input type="text">
+	</div>
+</tab-content>
+<!--커스텀 엘리먼트:E-->
+
+<script>
+/*
+ 커스텀 엘리먼트
+ 쉐도우돔
+ 슬롯 (or template)
+ 이용하여 Custom modal 작성
+ */
+class tabTemplate extends HTMLElement {
+	constructor() {
+		super();
+		let tabTemplate = document.getElementById('tab-template');//템플릿을 가져옴
+		this.attachShadow({ mode: 'open' }).appendChild(tabTemplate.content.cloneNode(true));//커스텀엘리먼트에 쉐도우루트를 형성해서 가져온 템플릿을 복제해서 넣음
+	}
+	/**
+	 * 가상 트리가 document 에 연결된후 콜백
+	 */
+	connectedCallback() {
+		this._modal = this.shadowRoot.querySelector('.tab-wrap');
+		this._modal.style.backgroundColor = this.getAttribute('bgcolor');//커스텀 엘리먼트에 추가한 속성을 가져와서 tab-wrap style 삽입
+	}
+	show() {
+		//탭 커스텀 엘리먼트 돌면서 this를 제외하고 display:none 처리
+		for (var i = 0; i < document.getElementsByTagName('tab-content').length; i++) {
+			if(document.getElementsByTagName('tab-content')[i] !== this){
+				document.getElementsByTagName('tab-content')[i].shadowRoot.querySelector('.tab-wrap').style.display = 'none';
+			}else{
+				this._modal.style.display = 'block';
+			}
+		}
+	}
+}
+
+customElements.define('tab-content', tabTemplate);//커스텀 엘리먼트 등록
+document.querySelector('#tab1').show();//탭 호출
+
+</script>
+
+</body>
+</html>
