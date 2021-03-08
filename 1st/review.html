@@ -9,13 +9,14 @@
 
 <style>
 	.tab-button{display:flex;padding:0;background:#ddddff;list-style:none}
-	.tab-button a{display:block;padding:20px;color:#333;font-weight:700;text-decoration:none}
+	.tab-button li{color:#333;}
+	.tab-button a{display:block;padding:20px;color:inherit;font-weight:700;text-decoration:none}
 </style>
 
 <ul class="tab-button">
-	<li><a href="javascript:document.querySelector('#tab1').show()">TAB1</a></li>
-	<li><a href="javascript:document.querySelector('#tab2').show()">TAB2</a></li>
-	<li><a href="javascript:document.querySelector('#tab3').show()">TAB3</a></li>
+	<li><a href="#" onclick="document.querySelector('#tab1').show(this);">TAB1</a></li>
+	<li><a href="#" onclick="document.querySelector('#tab2').show(this);">TAB2</a></li>
+	<li><a href="#" onclick="document.querySelector('#tab3').show(this);">TAB3</a></li>
 </ul>
 
 <!--탭 컨텐츠 템플릿:S-->
@@ -80,21 +81,31 @@ class tabTemplate extends HTMLElement {
 	connectedCallback() {
 		this._modal = this.shadowRoot.querySelector('.tab-wrap');
 		this._modal.style.backgroundColor = this.getAttribute('bgcolor');//커스텀 엘리먼트에 추가한 속성을 가져와서 tab-wrap style 삽입
+
+
 	}
-	show() {
+	show(event) {
 		//탭 커스텀 엘리먼트 돌면서 this를 제외하고 display:none 처리
 		for (var i = 0; i < document.getElementsByTagName('tab-content').length; i++) {
 			if(document.getElementsByTagName('tab-content')[i] !== this){
 				document.getElementsByTagName('tab-content')[i].shadowRoot.querySelector('.tab-wrap').style.display = 'none';
+				event.parentNode.parentNode.children[i].style.color='';
 			}else{
 				this._modal.style.display = 'block';
+				event.parentNode.style.color='#6a6ac0';
 			}
 		}
+	}
+	set(idx){
+		//탭 오픈 셋팅
+		var eq=idx-1;
+		document.getElementsByTagName('tab-content')[eq].shadowRoot.querySelector('.tab-wrap').style.display = 'block';
+		document.getElementsByClassName('tab-button')[0].children[eq].style.color='#6a6ac0';
 	}
 }
 
 customElements.define('tab-content', tabTemplate);//커스텀 엘리먼트 등록
-document.querySelector('#tab1').show();//탭 호출
+document.querySelector('#tab1').set(1);
 
 </script>
 
