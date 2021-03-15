@@ -61,7 +61,7 @@ new Vue({
 					lthis.items[key].visible=false;
 				},2000);
 			}
-			lthis.items[key].zIndex=this.styleObject.zIndex++;
+			lthis.items[key].zIndex=this.zIndexUp++;
 		},
 		modalClose:function(key){
 			this.items[key].visible=false;
@@ -73,9 +73,7 @@ new Vue({
 		}
 	},
 	data:{
-		styleObject: {
-			zIndex: 0,
-		},
+		zIndexUp:0,
 		items: [
 			{
 				text: '잘못된 접근입니다.',
