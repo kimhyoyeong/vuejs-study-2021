@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>vue component</title>
+	<!-- vuejs dist -->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+</head>
+<body>
+
+<div id="app">
+	<ul>
+		<list-component ></list-component>
+		<list-component msg="325423"></list-component>
+		<list-component msg="ㅠㅅㅎ"></list-component>
+		<list-component msg="345" :count="21312" :countries="['서울','베트남']"></list-component>
+		<!--
+			리터럴방식으로 문자열로 전달되기때문에
+			v-bind: 디렉티브 이용해야 타입에 맞게 노출됨
+		-->
+	</ul>
+	
+	<table-component :contacts="list1"></table-component>
+	<table-component :contacts="list2"></table-component>
+	
+	
+	<parent-component :buttons="buttons"></parent-component>
+	
+	<search-contact-component :contacts="list1"></search-contact-component>
+	
+</div>
+
+<template id="listTemplate">
+	<li>{{msg}}</li>
+</template>
+
+<script>
+Vue.component('list-component',{
+	template: '#listTemplate',
+	props:{
+		msg:{
+			type:String,
+			default:'안녕하세요'
+		},
+		count:{
+			type:Number,
+			required:false
+		},
+		countries:{//배열을 기본값을 할때는 반드시 함수로 사용
+			type:Array,
+			default:function(){
+				return ['대한민국']
+			}
+		}
+	}
+})
+</script>
+
+<template id="tableTemplate">
+	<div>
+		<table>
+			<thead>
+			<tr>
+				<th>번호</th>
+				<th>이름</th>
+				<th>전화번호</th>
+				<th>주소</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr v-for="contact in contacts">
+				<td>{{contact.no}}</td>
+				<td>{{contact.name}}</td>
+				<td>{{contact.tel}}</td>
+				<td>{{contact.address}}</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</template>
+
+<script>
+Vue.component('table-component',{
+	template: '#tableTemplate',
+	props:['contacts']
+})
+</script>
+
+
+<template id="childTemplate">
+	<div>
+		<button @click="clickEvent" v-bind:data-lang="buttonInfo.value">{{buttonInfo.text}}</button>
+	</div>
+</template>
+
+<script>
+Vue.component('child-component',{
+	template:'#childTemplate',
+	props:['buttonInfo'],
+	data:function(){
+		return{
+			msg:'dddd'
+		}
+	},
+	methods:{
+		clickEvent:function(e){
+			this.$emit('timeclick',e.target.innerText,e.target.dataset.lang)
+		}
+	}
+})
+</script>
+
+<template id="parentTemplate">
+	<div>
+		<child-component v-for="button in buttons" v-bind:button-info="button" v-on:timeclick="timeClickEvent"></child-component><!--bind로 데이터 내려주기 props-->
+		<div>{{ msg }}</div>
+	</div>
+</template>
+
+<script>
+Vue.component('parent-component',{
+	template:'#parentTemplate',
+	props:['buttons'],
+	data:function(){
+		return {msg:''}
+	},
+	methods:{
+		timeClickEvent:function(k,v){
+			this.msg=k+v;
+		}
+	}
+})
+</script>
+
+<template id="search-contact-component">
+	<div>
+		<search-component v-on:search="searchevent"></search-component>
+		<contact-component :list1="contacts"></contact-component>
+	</div>
+</template>
+
+<template id="search-component">
+	<div>
+		<label>이름:<input type="text" @keyup.enter="keyupEvent" v-model.trim="name"></label>
+	</div>
+</template>
+
+<template id="contact-component">
+	<div>
+		<table>
+			<thead>
+			<tr>
+				<th>번호</th>
+				<th>이름</th>
+				<th>전화번호</th>
+				<th>주소</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr v-for="contact in list1">
+				<td>{{contact.no}}</td>
+				<td>{{contact.name}}</td>
+				<td>{{contact.tel}}</td>
+				<td>{{contact.address}}</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</template>
+
+<script>
+Vue.component('search-contact-component',{
+	template:'#search-contact-component',
+	props:['contacts'],
+	methods:{
+		searchevent:function(name){
+		}
+	}
+})
+Vue.component('search-component',{
+	template:'#search-component',
+	data:function(){
+		return{
+			name:''
+		}
+	},
+	methods:{
+		keyupEvent:function(e){
+			var val=e.target.value;
+			if(val.length>=2){
+				this.$emit('search',val)
+			}else{
+				this.$emit('search','')
+			}
+		}
+	}
+})
+Vue.component('contact-component',{
+	template:'#contact-component',
+	props:['list1']
+})
+</script>
+
+
+<script>
+new Vue({
+	el:'#app',
+	data:{
+		list1:[
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+		],
+		list2:[
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+			{'no':88,'name':'kim','tel':'010-5555-5555','address':'서울'},
+		],
+		buttons:[
+			{text:'hi1',value:'영어'},
+			{text:'hi2',value:'영어'},
+			{text:'hi3',value:'영어'},
+			{text:'hi4',value:'영어'},
+			{text:'5',value:'영어'},
+		]
+	}
+})
+</script>
+</body>
+</html>

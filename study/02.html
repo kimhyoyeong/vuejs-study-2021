@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>vue event</title>
+	<!-- vuejs dist -->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	
+	<style>
+		hr{
+			margin:50px 0;
+			border-bottom:1px solid #f2f2f2;
+		}
+	</style>
+</head>
+<body>
+
+<div id="app">
+	
+	<!--
+	v-on:click ▶ @click
+	
+	-->
+	<div><input type="number" v-model="amount"></div>
+	<div>
+		<!--<button @click="balance += parseInt(amount)">예금</button>
+		<button @click="balance -= parseInt(amount)">인출</button>-->
+		
+		<button @click="deposit">예금</button>
+		<button @click="withdraw">인출</button>
+	</div>
+	<div>
+		계좌 잔고 : <span>{{balance}}</span>
+	</div>
+	
+	<hr>
+
+	
+</div>
+
+<script>
+new Vue({
+	el:'#app',
+	data:{
+		amount:0,
+		balance:0,
+	},
+	methods:{
+		deposit:function(e){
+			let amt=parseInt(this.amount);
+			if(amt<=0){
+				alert('0보다 큰 값을 예금해야 합니다')
+			}else{
+				this.balance += amt;
+			}
+		},
+		withdraw:function(e){
+			let amt=parseInt(this.amount);
+			if(amt<=0){
+				alert('0보다 큰 값을 인출할 수 있습니다')
+			}else if(amt > this.balance){
+				alert('잔고보다 많은 금액을 인출할 수 없습니다')
+			}else{
+				this.balance-=amt;
+			}
+		}
+	}
+})
+</script>
+
+</body>
+</html>
