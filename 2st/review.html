@@ -68,7 +68,7 @@ new Vue({
 					item.visible = false;
 				}, 2000);
 			}
-			item.zIndex = this.zIndexUp++;
+			item.zIndex = ++this.zIndexUp;
 		},
 		modalClose:function(item){
 			item.visible=false;
