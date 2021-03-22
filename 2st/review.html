@@ -23,7 +23,7 @@
 
 <div id="app">
 	
-	<button v-for="(item, key) in items" :key="key" v-on:click="modalOpen(key)" class="btn-snack">{{item.msgName}}</button>
+	<button v-for="(item, key) in items" :key="key" v-on:click="modalOpen(item)" class="btn-snack">{{item.msgName}}</button>
 	
 	<!--
 	v-for를 사용하여 동시에 렌더링 하고자 하는 항목의 전체 목록이 있는 경우는 어떨까요?
@@ -37,9 +37,9 @@
 	-->
 	
 	<transition name="snack" v-for="(item, key) in items" :key="key">
-		<div v-if="item.visible" v-bind:style="zIndexUpdate(key)" class="snack-box">
+		<div v-if="item.visible" v-bind:style="zIndexUpdate(item)" class="snack-box">
 			<p>{{ item.msg }}</p>
-			<button v-on:click="modalClose(key)">CLOSE</button>
+			<button v-on:click="modalClose(item)">CLOSE</button>
 		</div>
 	</transition>
 </div>
@@ -61,22 +61,21 @@ methods/data
 new Vue({
 	el:'#app',
 	methods:{
-		modalOpen: function (key) {
-			let _this=this;
-			if(this.items[key].visible===false){
-				_this.items[key].visible = true;
+		modalOpen: function (item) {
+			if (!item.visible) {
+				item.visible = true;
 				setTimeout(() => {
-					_this.items[key].visible=false;
-				},2000);
+					item.visible = false;
+				}, 2000);
 			}
-			_this.items[key].zIndex=this.zIndexUp++;
+			item.zIndex = this.zIndexUp++;
 		},
-		modalClose:function(key){
-			this.items[key].visible=false;
+		modalClose:function(item){
+			item.visible=false;
 		},
-		zIndexUpdate(key) {
+		zIndexUpdate(item) {
 			return{
-				zIndex: this.items[key].zIndex,
+				zIndex: item.zIndex,
 			}
 		}
 	},
