@@ -1,18 +1,19 @@
 <template>
-	<span class="check-filed">
+	<span class="radio-field">
 		<label v-bind:for="val">{{val}}</label>
 		<input
-				type="checkbox"
+				type="radio"
 				v-bind:id="val"
-				v-bind:checked="falseValue"
-				v-on:change="updateChecked"
+				v-bind:name="name"
+				v-bind:checked="updateValue"
+				v-on:change="updateRadio"
 		>
 	</span>
 </template>
 
 <script>
 export default {
-	name: 'checkField',
+	name: 'radioField',
 	model: {
 		// 현재 값을 value가 아니라 current로 할당하고 싶은 경우
 		props: 'modelValue',
@@ -25,7 +26,11 @@ export default {
 	props: {
 		val: {
 			type: null,
-			default: true,
+			default: true
+		},
+		name: {
+			type: String,
+			required: true
 		},
 		falseValue: {
 			type: null,
@@ -34,44 +39,19 @@ export default {
 	},
 	data() {
 		return {
+			checked: false
 		}
 	},
 	methods: {
-		updateChecked: function(event) {
-			let data = this.$attrs.value;
-			
-			if (event.target.checked) {
-				data.push(this.val);
-				this.$emit('change', data);
-			} else {
-				this.$emit('change',
-						data.filter(f => f !== this.val),
-				);
-			}
-		},
+		updateRadio(event) {
+			this.checked = event.target.checked;
+			this.$emit('change', event.target.checked ? this.val : this.falseValue);
+		}
 	},
 	computed:{
 		updateValue:function(){
+			this.$emit('change',this.val);
 			return this.val;
-			
-			/*let data=this.list.push(this.val)
-			
-			console.log(data)
-			this.$emit('input',
-					data.filter(f => f !== this.val),
-			);*/
-			
-			
-		/*	if(this.falseValue){
-				console.log(this.val)
-			}*/
-			
-			//this.$emit('change', this.val);
-			
-			/*let data = this.$attrs.value;
-			data.push(this.val);
-			this.$emit('change', data);
-			return this.val;*/
 		}
 	}
 };

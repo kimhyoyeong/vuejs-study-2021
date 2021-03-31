@@ -34,18 +34,40 @@
 		</div>
 		
 		<div class="form-box">
-			<check-field
-					type="radio"
-					name="gender"
-					v-for="(item,key) in formData.genders"
-					v-bind:key="key"
+			<radio-field
 					v-model="formData.gender"
-					v-bind:title="item.option"
-					v-bind:label="item.label"
-					v-bind:checked="item.checked"
+					val="female"
+					name="gender"
+					false-value="true"
+			/>
+			<radio-field
+					v-model="formData.gender"
+					val="male"
+					name="gender"
+					
 			/>
 		</div>
 		
+		<div class="form-box">
+			<check-field
+					v-model="formData.checkList"
+					val="1"
+					false-value="true"
+			/>
+			<check-field
+					v-model="formData.checkList"
+					val="2"
+					false-value="true"
+			/>
+			<check-field
+					v-model="formData.checkList"
+					val="3"
+			/>
+			<check-field
+					v-model="formData.checkList"
+					val="4"
+			/>
+		</div>
 		
 		<hr>
 		
@@ -54,6 +76,7 @@
 		<p>PW <em>{{formData.pw}}</em></p>
 		<p>email <em>{{formData.emailId}}{{formData.selectEmail}}</em></p>
 		<p>gender <em>{{formData.gender}}</em></p>
+		<p>checkList <em>{{formData.checkList}}</em></p>
 	
 		
 	</sub-layout>
@@ -61,9 +84,10 @@
 
 <script>
 import SubLayout from '@/components/Layout/Sub/Index';
-import InputField from '@/components/Common/InputField';
-import selectField from '@/components/Common/selectField';
-import CheckField from '../components/Common/checkField';
+import InputField from '@/components/Common/inputField';
+import SelectField from '@/components/Common/selectField';
+import CheckField from '@/components/Common/checkField';
+import RadioField from '@/components/Common/radioField';
 
 export default {
 	name: 'Login',
@@ -75,15 +99,12 @@ export default {
 				gender: '',
 				emailId: '',
 				selectEmail: '',
-				genders: [
-					{'option': '여', 'label': 'female', 'checked': true},
-					{'option': '남', 'label': 'male', 'checked': false},
-				],
 				emailList: [
 					'@gmail.com',
 					'@hanmail.net',
 					'@naver.net',
 				],
+				checkList:[],
 			},
 		};
 	},
@@ -93,7 +114,8 @@ export default {
 		CheckField,
 		SubLayout,
 		InputField,
-		selectField,
+		SelectField,
+		RadioField,
 	},
 };
 </script>

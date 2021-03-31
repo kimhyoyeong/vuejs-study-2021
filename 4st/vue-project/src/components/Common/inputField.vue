@@ -14,7 +14,7 @@
 
 <script>
 export default {
-	name: 'InputField',
+	name: 'inputField',
 	props: ['value', 'type', 'placeholder','label', 'title'],//부모로 부터 받아올 속성들을 넣음
 	methods: {
 		valid: function(value) {
