@@ -3,7 +3,7 @@
 		<label>
 			<input type="radio"
 				v-bind:name="name"
-				v-bind:checked="falseValue"
+				v-bind:checked="checked"
 				v-on:input="checkValue"/>
 			{{val}}
 		</label>
@@ -14,22 +14,21 @@
 export default {
 	name: 'cRadio',
 	props: {
-		val: String,
-		name: String,
-		checked: String,
-	},
-	data() {
-		return {
-			falseValue: this.checked ? true : false,
-		};
+		val: [String, Number],
+		name: [String, Number],
+		checked: {
+			default: false,
+			type: Boolean,
+		},
 	},
 	methods: {
 		checkValue: function() {
 			this.$emit('input', this.val);
+			
 		},
 	},
 	created: function() {
-		if (this.falseValue) {
+		if (this.checked) {
 			this.$emit('input', this.val);
 		}
 	},

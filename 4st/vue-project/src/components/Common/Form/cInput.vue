@@ -12,7 +12,7 @@
 <script>
 export default {
 	name: 'cInput',
-	props: {//자식 컴포넌트에서 현재값에 접근하려면 받아와야함
+	props: {//자식 컴포넌트에서 현재값에 접근하려면 받아와야함(그래야 받아온 값을 부모에 뿌려줄수있음)
 		value: String,
 		placeholder: String,
 	},

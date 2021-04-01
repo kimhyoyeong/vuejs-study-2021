@@ -12,7 +12,7 @@
 			v-model="formData.gender"
 			name="gender"
 			val="여"
-			checked="true"/>
+			v-bind:checked="true"/>
 		<c-radio
 			v-model="formData.gender"
 			name="gender"
@@ -22,11 +22,11 @@
 		<c-check
 			v-model="formData.checkList"
 			val="js"
-			checked="true"/>
+			v-bind:checked="true"/>
 		<c-check
 			v-model="formData.checkList"
 			val="css"
-			checked="true"/>
+			v-bind:checked="true"/>
 		<c-check
 			v-model="formData.checkList"
 			val="html"/>
@@ -39,7 +39,12 @@
 		<c-check
 			v-model="formData.agreeCheck"
 			val="동의"
-			checked="true"/>
+			v-bind:checked="true"/>
+		
+		<br>
+		
+		<button v-on:click="submit">전송</button>
+		
 		<hr>
 		
 		<p>{{formData.id}}</p>
@@ -67,7 +72,17 @@ export default {
 			},
 		};
 	},
-	methods: {},
+	methods: {
+		submit() {
+			let sendData = {
+				id:this.formData.id,
+				gender:this.formData.gender,
+				check:this.formData.checkList,
+				agree:this.formData.agreeCheck,
+			};
+			console.log(sendData);
+		}
+	},
 	components: {
 		SubLayout,
 		cInput,

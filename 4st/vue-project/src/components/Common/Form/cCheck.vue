@@ -3,7 +3,7 @@
 		<label>
 			<input type="checkbox"
 				v-bind:value="value"
-				v-bind:checked="falseValue"
+				v-bind:checked="checked"
 				v-on:input="checkValue"/>
 			{{val}}
 		</label>
@@ -15,13 +15,11 @@ export default {
 	name: 'cCheck',
 	props: {
 		val: [String, Number],//각각의 value 값
-		value: [Array, Boolean],//v-model에 바인딩 되는 값(즉 배열 또는 단일 체크)
-		checked: {},
-	},
-	data() {
-		return {
-			falseValue: this.checked ? true : false,
-		};
+		value: [Array, Boolean],//v-model 바인딩 되는 값(즉 배열 또는 단일 체크)
+		checked: {
+			default:false,
+			type:Boolean
+		},
 	},
 	methods: {
 		checkValue: function() {
@@ -40,13 +38,13 @@ export default {
 	},
 	created: function() {
 		if (this.value instanceof Array) {
-			if (this.falseValue) {
+			if (this.checked) {
 				let varArr = this.value;
 				varArr.push(this.val);
-				this.falseValue = true;
+				this.checked = true;
 			}
 		}else{
-			this.$emit('input', this.falseValue);
+			this.$emit('input', this.checked);
 		}
 	},
 	
