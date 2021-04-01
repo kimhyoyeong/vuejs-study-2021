@@ -4,6 +4,7 @@
 		<input
 				type="checkbox"
 				v-bind:id="val"
+				v-bind:value="val"
 				v-bind:checked="falseValue"
 				v-on:change="updateChecked"
 		>
@@ -31,6 +32,9 @@ export default {
 			type: null,
 			default: false,
 		},
+		value: { // v-model과 매칭되는 value
+			type: [String, Array, Boolean],
+		},
 	},
 	data() {
 		return {
@@ -38,7 +42,45 @@ export default {
 	},
 	methods: {
 		updateChecked: function(event) {
-			let data = this.$attrs.value;
+			
+			/*console.log(this.value)//배열에 바인딩 되어있으니! 빈 배열 값을 가져옴
+			let checkArr = this.value
+			checkArr.push(this.val)
+			this.$emit('change', checkArr);
+			console.log(checkArr)*/
+			
+			if(this.value instanceof Array) {
+				// 다중선택 체크박스인 경우 값을 배열로 반환
+				
+				// v-model과 연결된 value(Array)를 checkArr 배열에 할당
+				let checkArr = this.value
+				
+				// 선택된 체크박스의 값을 checkArr에 push
+				if (event.target.checked) {
+					checkArr.push(this.val)
+				} else {
+					// 선택된 체크박스를 해제한 경우 checkArr에서 현재 체크박스의 값을 삭제
+					checkArr.splice(checkArr.indexOf(this.val), 1)
+				}
+				this.$emit('input', checkArr);
+			} else {
+				// 다중선택이 아닌경우 true / false 반환
+				this.$emit('input', event.target.checked);
+			}
+			
+			
+			
+		/*	if(this.value instanceof Array) {
+				let checkArr = this.value
+				checkArr.push(this.val)
+				this.$emit('change', checkArr);
+				console.log(checkArr)
+			}*/
+			
+			
+			
+			
+			/*let data = this.$attrs.value;//props에 안넣고 바로 접근하기 위해서
 			
 			if (event.target.checked) {
 				data.push(this.val);
@@ -47,33 +89,9 @@ export default {
 				this.$emit('change',
 						data.filter(f => f !== this.val),
 				);
-			}
+			}*/
 		},
 	},
-	computed:{
-		updateValue:function(){
-			return this.val;
-			
-			/*let data=this.list.push(this.val)
-			
-			console.log(data)
-			this.$emit('input',
-					data.filter(f => f !== this.val),
-			);*/
-			
-			
-		/*	if(this.falseValue){
-				console.log(this.val)
-			}*/
-			
-			//this.$emit('change', this.val);
-			
-			/*let data = this.$attrs.value;
-			data.push(this.val);
-			this.$emit('change', data);
-			return this.val;*/
-		}
-	}
 };
 </script>
 

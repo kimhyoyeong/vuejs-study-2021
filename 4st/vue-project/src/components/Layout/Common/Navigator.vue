@@ -23,8 +23,8 @@ export default {
 					link: '/about',
 				},
 				{
-					name: 'Login',
-					link: '/login',
+					name: 'Form',
+					link: '/form',
 				},
 			],
 		};

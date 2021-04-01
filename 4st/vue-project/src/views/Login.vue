@@ -51,21 +51,19 @@
 		<div class="form-box">
 			<check-field
 					v-model="formData.checkList"
-					val="1"
-					false-value="true"
+					val="밥"
 			/>
 			<check-field
 					v-model="formData.checkList"
-					val="2"
-					false-value="true"
+					val="국"
 			/>
 			<check-field
 					v-model="formData.checkList"
-					val="3"
+					val="반찬"
 			/>
 			<check-field
 					v-model="formData.checkList"
-					val="4"
+					val="물"
 			/>
 		</div>
 		
