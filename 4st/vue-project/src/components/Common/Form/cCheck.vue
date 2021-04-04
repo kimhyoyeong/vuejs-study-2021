@@ -23,28 +23,27 @@ export default {
 	},
 	methods: {
 		checkValue: function() {
-			let valArr = this.value;
-			if (this.value instanceof Array) {
-				if (event.target.checked) {
-					valArr.push(this.val);
+			let valArr = this.value;//바인딩된 배열을 받아옴
+			if (this.value instanceof Array) {//배열형태이면
+				if (event.target.checked) {//체크가되면
+					valArr.push(this.val);//배열에 해당 값 추가
 				} else {
-					valArr.splice(valArr.indexOf(this.val), 1);
+					valArr.splice(valArr.indexOf(this.val), 1);//배열해 해당 값 제거
 				}
-				this.$emit('input', valArr);
+				this.$emit('input', valArr);//배열 부모에게 던짐
 			} else {
-				this.$emit('input', event.target.checked);
+				this.$emit('input', event.target.checked);//단일 속성일 경우 boolean값 던져줌
 			}
 		},
 	},
-	created: function() {
-		if (this.value instanceof Array) {
-			if (this.checked) {
-				let varArr = this.value;
-				varArr.push(this.val);
-				this.checked = true;
+	created: function() {//부모로부터 체크된값 받아서
+		if (this.value instanceof Array) {//배열이면
+			if (this.checked) {//체크된 것들만
+				let varArr = this.value;//배열받아와서
+				varArr.push(this.val);//배열에 값추가
 			}
 		}else{
-			this.$emit('input', this.checked);
+			this.$emit('input', this.checked);//단일 속성일 경우 boolean값 던져줌
 		}
 	},
 	

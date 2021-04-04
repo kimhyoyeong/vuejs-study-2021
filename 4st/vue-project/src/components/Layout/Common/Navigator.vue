@@ -26,6 +26,10 @@ export default {
 					name: 'Form',
 					link: '/form',
 				},
+				{
+					name: 'Board',
+					link: '/board',
+				},
 			],
 		};
 	},

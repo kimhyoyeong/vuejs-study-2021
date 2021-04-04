@@ -43,6 +43,11 @@
 		
 		<br>
 		
+		<c-text-area
+			v-model="formData.memo"/>
+		
+		<br>
+		
 		<button v-on:click="submit">전송</button>
 		
 		<hr>
@@ -51,6 +56,7 @@
 		<p>{{formData.gender}}</p>
 		<p>{{formData.checkList}}</p>
 		<p>{{formData.agreeCheck}}</p>
+		<p>{{formData.memo}}</p>
 	
 	</sub-layout>
 </template>
@@ -59,6 +65,7 @@ import SubLayout from '@/components/Layout/Sub/Index';
 import cInput from '@/components/Common/Form/cInput';
 import cRadio from '@/components/Common/Form/cRadio';
 import cCheck from '@/components/Common/Form/cCheck';
+import cTextArea from '@/components/Common/Form/cTextArea';
 
 export default {
 	name: 'Form',
@@ -69,6 +76,7 @@ export default {
 				gender:'',
 				checkList:[],
 				agreeCheck:false,
+				memo:''
 			},
 		};
 	},
@@ -77,8 +85,9 @@ export default {
 			let sendData = {
 				id:this.formData.id,
 				gender:this.formData.gender,
-				check:this.formData.checkList,
+				checkList:this.formData.checkList,
 				agree:this.formData.agreeCheck,
+				memo:this.formData.memo,
 			};
 			console.log(sendData);
 		}
@@ -88,6 +97,7 @@ export default {
 		cInput,
 		cRadio,
 		cCheck,
+		cTextArea,
 	},
 };
 </script>
