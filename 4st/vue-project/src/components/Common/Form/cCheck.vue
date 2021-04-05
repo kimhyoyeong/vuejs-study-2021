@@ -22,13 +22,15 @@ export default {
 		},
 	},
 	methods: {
-		checkValue: function() {
+		checkValue: function(event) {
 			let valArr = this.value;//바인딩된 배열을 받아옴
 			if (this.value instanceof Array) {//배열형태이면
 				if (event.target.checked) {//체크가되면
 					valArr.push(this.val);//배열에 해당 값 추가
 				} else {
-					valArr.splice(valArr.indexOf(this.val), 1);//배열해 해당 값 제거
+					valArr.splice(
+					    valArr.indexOf(this.val), 1
+          );//배열해 해당 값 제거
 				}
 				this.$emit('input', valArr);//배열 부모에게 던짐
 			} else {
@@ -46,7 +48,7 @@ export default {
 			this.$emit('input', this.checked);//단일 속성일 경우 boolean값 던져줌
 		}
 	},
-	
+
 };
 </script>
 

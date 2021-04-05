@@ -14,7 +14,7 @@
 <script>
 export default {
 	name: 'cRadio',
-	model:{
+	model: {
 		//prop:'current',
 		//value가 아닌 current로 할당하고 싶은 경우
 		event:'change'
