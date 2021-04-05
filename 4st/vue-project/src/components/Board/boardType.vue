@@ -45,7 +45,7 @@
 						<div>{{list.name}}</div>
 						<div class="img-box"><img v-bind:src="list.imgUrl" alt=""></div>
 						<div>{{list.subject}}</div>
-						<div>{{list.description}}</div>
+						<div class="desc">{{list.description}}</div>
 						<div>{{list.views}}</div>
 					</a>
 				</li>
@@ -191,6 +191,13 @@ export default {
 								display:block;
 								width:100%;
 							}
+						}
+						.desc{
+							text-overflow:ellipsis;
+							white-space:nowrap;
+							word-wrap:normal;
+							width:100%;
+							overflow:hidden;
 						}
 					}
 				}

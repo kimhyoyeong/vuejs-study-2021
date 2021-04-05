@@ -44,7 +44,8 @@
 		<br>
 		
 		<c-text-area
-			v-model="formData.memo"/>
+			v-model="formData.memo"
+			maxlength="50"/>
 		
 		<br>
 		
@@ -76,7 +77,7 @@ export default {
 				gender:'',
 				checkList:[],
 				agreeCheck:false,
-				memo:''
+				memo:'ddddddddddd'
 			},
 		};
 	},
