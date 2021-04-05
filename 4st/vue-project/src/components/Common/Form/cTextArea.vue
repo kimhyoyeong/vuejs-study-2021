@@ -12,8 +12,8 @@
 export default {
 	name: 'cTextArea',
 	props:{
-		value:String,
-		maxlength:String,
+		value: String,
+		maxlength: String,
 	},
 	data(){
 		return{
@@ -21,8 +21,8 @@ export default {
 		}
 	},
 	methods:{
-		updateValue:function(event){
-			event.target.value=event.target.value.substring(0,this.maxlength);
+		updateValue:function(event) {
+			event.target.value = event.target.value.substring(0, Number(this.maxlength));
 			this.$emit('input',event.target.value);
 			this.textLength = event.target.value.length;
 		}
@@ -41,5 +41,5 @@ export default {
 			text-align:right;
 		}
 	}
-	
+
 </style>

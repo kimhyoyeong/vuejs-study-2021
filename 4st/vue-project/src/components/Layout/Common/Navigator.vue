@@ -1,8 +1,8 @@
 <template>
 	<div id="nav">
 		<ul>
-			<li v-for="(item, index) of listItem" :key="index">
-				<router-link :to="item.link">{{ item.name }}</router-link>
+			<li v-for="(item, index) of routes" :key="index">
+				<router-link :to="item.path">{{ item.name }}</router-link>
 			</li>
 		</ul>
 	</div>
@@ -11,30 +11,16 @@
 <script>
 export default {
 	name: 'Navigator',
-	data() {
-		return {
-			listItem: [
-				{
-					name: 'Home',
-					link: '/',
-				},
-				{
-					name: 'About',
-					link: '/about',
-				},
-				{
-					name: 'Form',
-					link: '/form',
-				},
-				{
-					name: 'Board',
-					link: '/board',
-				},
-			],
-		};
-	},
+  computed: {
+	  routes: function() {
+	    return this.$router.getRoutes().filter(item => {
+	      return item.path !== '';
+      })
+    }
+  }
 };
 </script>
+
 <style lang="scss">
 	#nav{
 		padding:30px;
