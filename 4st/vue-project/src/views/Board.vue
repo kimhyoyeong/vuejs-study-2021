@@ -1,12 +1,13 @@
 <template>
 	<sub-layout>
-		<board-type v-bind:boardData="boardData"/>
+		<board-list v-bind:boardData="boardData"/>
 	</sub-layout>
 </template>
 
 <script>
 import SubLayout from "@/components/Layout/Sub/Index"
-import boardType from '@/components/Board/boardType';
+//import boardType from '@/components/Board/boardType';
+import boardList from '@/components/Board/boardList';
 
 export default {
 	name: 'Board',
@@ -24,7 +25,7 @@ export default {
 	},
 	components: {
 		SubLayout,
-		boardType,
+		boardList,
 	},
 };
 </script>

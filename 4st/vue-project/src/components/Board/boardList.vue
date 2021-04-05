@@ -1,56 +1,16 @@
 <template>
 	<div class="board-wrap">
 		<div class="type-box">
-			<a href="#" v-on:click="boardView('A')">리스트</a>
-			<a href="#" v-on:click="boardView('B')">갤러리</a>
-			<a href="#" v-on:click="boardView('C')">웹젠</a>
+			<a href="#" v-on:click="viewChange('boardTypeA')" v-bind:class="{'active': selected === 'boardTypeA'}">리스트</a>
+			<a href="#" v-on:click="viewChange('boardTypeB')" v-bind:class="{'active': selected === 'boardTypeB'}">갤러리</a>
+			<a href="#" v-on:click="viewChange('boardTypeC')" v-bind:class="{'active': selected === 'boardTypeC'}">웹젠</a>
 		</div>
+		
 		<transition name="board">
-			<div v-if="type==='A'" key="A" class="board-type1">
-				<table>
-					<thead>
-					<tr>
-						<th scope="col" style="width:8%;">번호</th>
-						<th scope="col">제목</th>
-						<th scope="col" style="width:10%;">글쓴이</th>
-						<th scope="col" style="width:15%;">날짜</th>
-						<th scope="col" style="width:10%;">조회수</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr v-for="(list, index) in dataOrder" v-bind:key="index">
-						<td>{{list.no}}</td>
-						<td class="sbj"><a href="#" v-on:click.prevent="modalOpen(list)">{{list.subject}}</a></td>
-						<td>{{list.name}}</td>
-						<td>{{list.date}}</td>
-						<td>{{list.views}}</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-			<div v-else-if="type==='B'" key="B" class="board-type2">
-				<ul>
-					<li v-for="(list, index) in dataOrder" v-bind:key="index">
-						<a href="#" v-on:click.prevent="modalOpen(list)">
-							<div class="img-box"><img v-bind:src="list.imgUrl" alt=""></div>
-						</a>
-					</li>
-				</ul>
-			</div>
-			<div v-else="type==='C'" key="C" class="board-type3">
-				<ul>
-					<li v-for="(list, index) in dataOrder" v-bind:key="index">
-						<a href="#" v-on:click.prevent="modalOpen(list)">
-							<div>{{list.no}}</div>
-							<div>{{list.name}}</div>
-							<div class="img-box"><img v-bind:src="list.imgUrl" alt=""></div>
-							<div>{{list.subject}}</div>
-							<div class="desc">{{list.description}}</div>
-							<div>{{list.views}}</div>
-						</a>
-					</li>
-				</ul>
-			</div>
+			<component
+				v-bind:is="currentView"
+				v-bind:boardData="boardData"
+				v-on:modal="modalOpen"/>
 		</transition>
 		
 		<board-popup
@@ -61,20 +21,32 @@
 </template>
 
 <script>
+import boardTypeA from '@/components/Board/boardTypeA';
+import boardTypeB from '@/components/Board/boardTypeB';
+import boardTypeC from '@/components/Board/boardTypeC';
 import boardPopup from '@/components/Board/boardPopup';
 
 export default {
-	name: 'boardType',
+	name: 'boardList',
 	props: ['boardData'],
 	data() {
 		return {
+			selected: '',
 			listItem: {},
 			visible: false,
-			type: 'A',
+			currentView: 'boardTypeA',
 		};
 	},
 	components: {
+		boardTypeA,
+		boardTypeB,
+		boardTypeC,
 		boardPopup,
+	},
+	computed: {
+		isActive(){
+			return this.isActive = !this.isActive;
+		}
 	},
 	methods: {
 		modalOpen: function(item) {
@@ -85,19 +57,18 @@ export default {
 		modalClose: function() {
 			this.visible = false;
 		},
-		boardView: function(type) {
-			this.type = type;
+		viewChange: function(type) {
+			this.currentView = type;
+			this.selected = type;
 		},
 	},
-	computed: {
-		dataOrder: function() {
-			return this.boardData.reverse();
-		},
+	mounted: function() {
+		return this.boardData.reverse();
 	},
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.board-wrap{
 		position:relative;
 		width:960px;
@@ -114,6 +85,10 @@ export default {
 				border-radius:5px;
 				&:first-child{
 					margin-left:0;
+				}
+				&.active{
+					background:#eee;
+					font-weight:700;
 				}
 			}
 		}
@@ -156,7 +131,7 @@ export default {
 						
 						.img-box{
 							overflow:hidden;
-							width:100%;height:250px;
+							width:100%;height:200px;
 							img{
 								display:block;
 								width:100%;
