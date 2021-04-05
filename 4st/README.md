@@ -52,7 +52,7 @@ v-model은 다음과 같은 두 가지 처리를 한 번에 작성할 수 있게
 >
 > @input > event.target.value
 
-**▶▶ 모두 한번에 자동화!**
+**▶ 모두 한번에 자동화!**
 
 
 
@@ -66,7 +66,7 @@ v-model은 다음과 같은 두 가지 처리를 한 번에 작성할 수 있게
 
 
 
-**▶▶ v-model을 사용할 때는 속성 값을 사용하지않음**
+**▶ v-model을 사용할 때는 속성 값을 사용하지않음**
 
 > 입력 양식의 값이나 선택되어 있는 것은 항상 v-model에 바인딩 한것과 동기화 됨
 >
@@ -157,11 +157,69 @@ this.$emit('input','2021-04-01')
 하지만, 자식 컴포넌트에서 현재 값에 접근하려면  props를 사용해서 명시적으로 전달 해줘야함! 
 
 ```javascript
-//자식 컴포넌트에서 현재 값에 접근하려면 value를 입력해야함
 props:['value']
 ```
 
 
+
+**▶ 체크박스?**
+
+체크박스 컴포넌트를 만들때 value 값은 배열로 넘어오게됨
+
+각각 체크박스의 값은 val로 넘겨주고 
+
+체크된 val값을 value 배열에 push 추가해준후 $emit 시킴
+
+```html
+<c-check
+		v-model="formData.checkList"
+		val="js"
+		v-bind:checked="true"/>
+```
+
+```html
+<template>
+	<span>
+		<label>
+			<input type="checkbox"
+				v-bind:value="value"
+				v-bind:checked="checked"
+				v-on:input="checkValue"/>
+			{{val}}
+		</label>
+	</span>
+</template>
+<script>
+export default {
+	name: 'cCheck',
+	props: {
+		val: [String, Number],//각각의 value 값
+		value: [Array, Boolean],//v-model 바인딩 되는 값(즉 배열 또는 단일 체크)
+		checked: {
+			default:false,
+			type:Boolean
+		},
+	},
+	methods: {
+		checkValue: function() {
+			let valArr = this.value;//바인딩된 배열을 받아옴
+			if (this.value instanceof Array) {//배열형태이면
+				if (event.target.checked) {//체크가되면
+					valArr.push(this.val);//배열에 해당 값 추가
+				} else {
+					valArr.splice(valArr.indexOf(this.val), 1);//배열해 해당 값 제거
+				}
+				this.$emit('input', valArr);//배열 부모에게 던짐
+			} else {
+				this.$emit('input', event.target.checked);//단일 속성일 경우 boolean값 던져줌
+			}
+		},
+	},
+	//이하생략
+	
+};
+</script>
+```
 
 
 
