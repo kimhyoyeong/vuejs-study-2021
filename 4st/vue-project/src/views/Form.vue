@@ -74,24 +74,24 @@ export default {
 		return {
 			formData: {
 				id: 'young',
-				gender:'',
-				checkList:[],
-				agreeCheck:false,
-				memo:'ddddddddddd'
+				gender: '',
+				checkList: [],
+				agreeCheck: false,
+				memo: 'ddddddddddd',
 			},
 		};
 	},
 	methods: {
 		submit() {
 			let sendData = {
-				id:this.formData.id,
-				gender:this.formData.gender,
-				checkList:this.formData.checkList,
-				agree:this.formData.agreeCheck,
-				memo:this.formData.memo,
+				id: this.formData.id,
+				gender: this.formData.gender,
+				checkList: this.formData.checkList,
+				agree: this.formData.agreeCheck,
+				memo: this.formData.memo,
 			};
 			console.log(sendData);
-		}
+		},
 	},
 	components: {
 		SubLayout,

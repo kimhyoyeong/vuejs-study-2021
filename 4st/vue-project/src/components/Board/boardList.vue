@@ -5,14 +5,14 @@
 			<a href="#" v-on:click="viewChange('boardTypeB')" v-bind:class="{'active': selected === 'boardTypeB'}">갤러리</a>
 			<a href="#" v-on:click="viewChange('boardTypeC')" v-bind:class="{'active': selected === 'boardTypeC'}">웹젠</a>
 		</div>
-
+		
 		<transition name="board">
 			<component
 				v-bind:is="currentView"
 				v-bind:board-data="boardData"
 				v-on:modal="modalOpen"/>
 		</transition>
-
+		
 		<board-popup
 			v-bind:list-item="listItem"
 			v-bind:visible="visible"
@@ -43,11 +43,6 @@ export default {
 		boardTypeC,
 		boardPopup,
 	},
-	computed: {
-		isActive(){
-			return this.isActive = !this.isActive;
-		}
-	},
 	methods: {
 		modalOpen: function(item) {
 			this.listItem = item;
@@ -63,6 +58,7 @@ export default {
 		},
 	},
 	mounted: function() {
+		this.selected = this.currentView;
 		return this.boardData.reverse();
 	},
 };
@@ -128,7 +124,7 @@ export default {
 					border-radius:30px;
 					a{
 						display:block;
-
+						
 						.img-box{
 							overflow:hidden;
 							width:100%;height:200px;
@@ -179,15 +175,15 @@ export default {
 			}
 		}
 	}
-
+	
 	.board-enter-active, .board-leave-active{
 		transition:opacity .5s;
 	}
-
+	
 	.board-leave-active{
 		position:absolute;
 	}
-
+	
 	.board-enter, .board-leave-to{
 		opacity:0;
 	}

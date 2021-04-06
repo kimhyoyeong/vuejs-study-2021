@@ -2,7 +2,7 @@
 	<transition name="pop">
 		<div class="pop-wrap"
 			v-if="visible"
-			v-bind:listItem="listItem"
+			v-bind:list-item="listItem"
 			v-bind:visible="visible">
 			<div class="pop-inner">
 				<div class="pop-content">
