@@ -182,7 +182,7 @@ props:['value']
 	<span>
 		<label>
 			<input type="checkbox"
-				v-bind:value="value"
+				v-bind:value="val"
 				v-bind:checked="checked"
 				v-on:input="checkValue"/>
 			{{val}}

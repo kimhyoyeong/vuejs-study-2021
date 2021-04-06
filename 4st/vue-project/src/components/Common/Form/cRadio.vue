@@ -3,7 +3,7 @@
 		<label>
 			<input type="radio"
 				v-bind:name="name"
-				v-bind:value="value"
+				v-bind:value="val"
 				v-bind:checked="checked"
 				v-on:change="checkValue"/>
 			{{val}}
