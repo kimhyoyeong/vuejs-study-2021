@@ -11,13 +11,13 @@
 <script>
 export default {
 	name: 'Navigator',
-  computed: {
-	  routes: function() {
-	    return this.$router.getRoutes().filter(item => {
-	      return item.path !== '';
-      })
-    }
-  }
+	computed: {
+		routes: function() {
+			return this.$router.getRoutes().filter(item => {
+				return item.path !== '';
+			});
+		},
+	},
 };
 </script>
 

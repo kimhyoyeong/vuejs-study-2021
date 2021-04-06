@@ -38,7 +38,7 @@ export default {
 			}
 		},
 	},
-	created: function() {//부모로부터 체크된값 받아서
+	created() {//부모로부터 체크된값 받아서
 		if (this.value instanceof Array) {//배열이면
 			if (this.checked) {//체크된 것들만
 				let varArr = this.value;//배열받아와서

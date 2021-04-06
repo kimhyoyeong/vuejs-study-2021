@@ -57,9 +57,9 @@ export default {
 			this.selected = type;
 		},
 	},
-	mounted: function() {
+	mounted() {
 		this.selected = this.currentView;
-		return this.boardData.reverse();
+		return this.boardData.reverse();//배열 순서 반전
 	},
 };
 </script>

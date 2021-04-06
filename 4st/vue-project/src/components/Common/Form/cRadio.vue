@@ -34,7 +34,7 @@ export default {
 			this.$emit('change', this.val);//체크된 값 넘겨줌
 		},
 	},
-	created: function() {//로드시
+	created() {//로드시
 		if (this.checked) {//체크된 값만
 			this.$emit('change', this.val);//값이름 넘겨줌
 		}
