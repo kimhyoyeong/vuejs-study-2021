@@ -1,12 +1,10 @@
 # 4주차  v-model
 
-v-model을 사용함으로써 입력 값, 선택 값을 데이터와 동기화해서  **양방향 데이터 바인딩**이 가능 하다.
+vue에서는 v-model을 사용해서 입력 값, 선택 값등을 데이터와 동기화하는 **양방향 데이터 바인딩**이 가능 하다
 
-
+<br>
 
 ## 입력 양식 핸들링
-
-
 
 ### v-model 사용 방법
 
@@ -32,7 +30,7 @@ new Vue({
 
 https://jsfiddle.net/hyokim/qy2n4dzw/
 
-
+<br>
 
 #### 양방향 데이터 바인딩
 
@@ -54,7 +52,7 @@ v-model은 다음과 같은 두 가지 처리를 한 번에 작성할 수 있게
 
 **▶ 모두 한번에 자동화!**
 
-
+<br>
 
 ### v-model로 받은 데이터의 자료형
 
@@ -70,11 +68,11 @@ v-model은 다음과 같은 두 가지 처리를 한 번에 작성할 수 있게
 
 > 입력 양식의 값이나 선택되어 있는 것은 항상 v-model에 바인딩 한것과 동기화 됨
 >
-> 따라서  value, checked, selected를 성절해도 이러한 속성은 무시됨
+> 따라서  value, checked, selected를 설정해도 이러한 속성은 무시됨
 
 
 
-
+<br>
 
 ### v-model 장식자
 
@@ -118,7 +116,7 @@ https://jsfiddle.net/hyokim/1uo4t6xj/
 
 <br>
 
-
+<br>
 
 ## 컴포넌트의 양방향 데이터 바인딩
 
@@ -126,7 +124,7 @@ https://jsfiddle.net/hyokim/1uo4t6xj/
 
 하지만, 입력 양식처럼 자동으로 양방향 데이터 바인딩을 실시 할 수있음
 
-
+<br>
 
 ### 컴포넌트의 v-model
 
@@ -143,14 +141,14 @@ input 이벤트 발생시 데이터를 부모에게 보내줄수 있음 할수 �
 `자식메서드`
 
 ```javascript
-this.$emit('input','2021-04-01')
+this.$emit('input','부모로 던지는 텍스트으으으')
 ```
 
+<br>
 
 
 
-
-### v-model의 값은 어디에?
+### v-model의 값은 어디에 바인딩?
 
 디폴트로 속성 **value**에 바인딩됨
 
@@ -160,21 +158,25 @@ this.$emit('input','2021-04-01')
 props:['value']
 ```
 
-
+<br>
 
 **▶ 체크박스?**
 
-체크박스 컴포넌트를 만들때 value 값은 배열로 넘어오게됨
-
-각각 체크박스의 값은 val로 넘겨주고 
-
-체크된 val값을 value 배열에 push 추가해준후 $emit 시킴
+> 체크박스 컴포넌트를 만들때 단일값이 아닌경우 value 값이 배열로 넘어옴
+>
+> 각각 체크박스의 값은 val로 넘겨주고 
+>
+> 체크된 val값을 value 배열에 추가해준 후 그 배열을 $emit 시킴
+>
 
 ```html
 <c-check
 		v-model="formData.checkList"
-		val="js"
+		val="Javascript"
 		v-bind:checked="true"/>
+<c-check
+		v-model="formData.checkList"
+		val="HTML"/>
 ```
 
 ```html
@@ -221,7 +223,7 @@ export default {
 </script>
 ```
 
-
+<br>
 
 ### 사용자 정의 v-model
 
