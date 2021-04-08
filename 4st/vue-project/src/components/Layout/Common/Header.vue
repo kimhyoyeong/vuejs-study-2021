@@ -1,13 +1,11 @@
 <template>
-	<header>
-		Header
-	</header>
+  <header>
+    Header
+  </header>
 </template>
 
 <script>
 export default {
-	name: 'Header',
+  name: "Header",
 };
 </script>
-
-
